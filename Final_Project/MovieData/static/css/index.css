@@ -1,0 +1,33 @@
+.display-category {
+    height: 130px;
+    width: 95%;
+    margin-left: 33px;
+    float: left;
+    background-color: white;
+}
+
+.movies {
+    margin: 20px;
+    margin-top: 20px;
+}
+
+.card {
+    float: left;
+    margin: 5px;
+    margin-left: 15px;
+}
+
+.card-img-top {
+    height: 250px;
+}
+
+.pagination {
+    height: 40px;
+    width: 300px;
+    background-color: #2d3246;
+    margin-left: 550px;
+    padding: 10px;
+    padding-left: 110px;
+    padding-top: 10px;
+    color: rgb(236, 234, 234);
+}

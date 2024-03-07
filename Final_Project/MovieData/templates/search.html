@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/index.css' %}"> 
+{% endblock %}
+
+{% block body %}
+<h2><b>You search for </b> '{{query}}'</h2>
+ <div class="products">
+  {% for i in movies %}
+  <div class="card" style="width: 15rem;height: 380px;">
+    <a href="{{ i.get_url }}"><img class="card-img-top" src="{{ i.movie_poster.url }}" alt="Card image cap"></a>
+    <div class="card-body">
+      <h5 class="card-title">
+      </h5>
+      <p class="card-text">{{ i.movie_tittle }}</p>
+      <p class="card-text">{{ i.movie_tittle }}</p>
+    </div>
+  </div>
+ </div>
+{% empty %}
+    <h3 style="color: white;"><b> No result found.........</b></h3>
+{% endfor %}<br>
+
+{% endblock %}
+
+{% block footer %} 
+{% endblock %}

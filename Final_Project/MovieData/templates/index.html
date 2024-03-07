@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/index.css' %}"> 
+{% endblock %}
+{% block tittle %}
+    <title>Home page</title>
+{% endblock %}
+
+{% block body %}
+{% include 'messages.html' %}
+ <div class="movies">
+  {% for i in movies.object_list %}
+  <div class="card" style="width: 15rem;height: 380px;">
+    <a href="{{ i.get_url }}"><img class="card-img-top" src="{{ i.movie_poster.url }}" alt="Card image cap"></a>
+    <div class="card-body">
+      <h5 class="card-title">
+      </h5>
+      <p class="card-text">{{ i.movie_tittle }}</p>
+      <p class="card-text"style="text-transform: uppercase;">{{ i.category }}</p>
+    </div>
+  </div>
+  {% endfor %}
+ </div>
+<br><br><br><br><br><br><br>
+<!-- paginator -->
+<div class="pagination" style="margin-top: 700px;">
+  {% if movies.has_next %}
+    <a href="?page={{ movies.next_page_number }}">Next</a>
+  {% endif %}
+
+  {% for i in movies.paginator.page_range %}
+    <a href="?page={{i}}" style="margin-left: 10px;"> {{i}} </a>
+  {% endfor %}
+
+  {% if movies.has_previous %}
+    <a href="?page={{ movies.previous_page_number }}" style="margin-left: 10px;">Previous</a>
+  {% endif %}
+</div>
+
+
+<script>
+  setTimeout(function(){
+    if ($('#msg').length > 0) {
+      $('#msg').remove();
+    }
+  }, 2000)
+</script>
+{% endblock %}
+

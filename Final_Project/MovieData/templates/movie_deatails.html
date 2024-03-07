@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/movie_deatils.css' %}"> 
+{% endblock %}
+{% block tittle %}
+<title>movie deatail page</title>
+{% endblock %}
+
+{% block body %}
+{% include 'messages.html' %}
+<div class="movie_deatial">
+    <div class="img">
+        <img src="{{ movie_deatails.movie_poster.url }}" alt="" class="img3" style="height: 1000px;width: 100%;">
+        <p>{{ product_deatails.name }}</p>
+    </div>
+    <div class="details">
+         <h1><b>Movie Deatails</b></h1>
+         <h3>{{ movie_deatails.movie_tittle }}</h3>
+         <h2><b>Discription</b></h2>
+         <p>{{ movie_deatails.description }}</p><br><br>
+         <h4><b>Movie Trailer</b></h4>
+         <p><a href="{{ movie_deatails.movie_trailer}}"<br><br>{{ movie_deatails.movie_trailer}}</a></p>
+         <h4><b>Movie Relese At</b></h4>
+         <p>{{ movie_deatails.relese_date }}</p><br><br>
+         <h4><b>Actors</b></h4>
+         <p style="text-transform: uppercase;">{{ movie_deatails.actors }}</p><br><br>
+        {% if user.is_authenticated %}
+           <a href="{% url 'update_movie' movie_deatails.id %}"><button type="submit" class="btn btn-primary">Update</button></a>   
+        {% endif %}
+        {% comment %} <a href="{% url 'delete_movie' movie_deatails.id %}">Delete</a> {% endcomment %}
+
+    </div>
+</div>
+
+
+
+<!-- for review view -->
+<h3>Audions Review.............</h3>
+<div class="cont">
+    {% for i in r %}
+    <div class="reviews">
+           <article class="box mb-3">
+            <div class="icontext w-100">
+
+                <div class="text">
+                    <span class="date text-muted float-md-right">{{i.updated_at}} </span>
+                    <h6 class="mb-1">{{i.rating}} </h6>
+                    <div class="rating-star">
+                        <span>
+                            <i class="fa fa-star{% if i.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if i.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if i.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if i.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i>
+                            <i class="fa fa-star{% if i.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}" aria-hidden="true"></i>
+                        </span>
+                    </div>
+                </div>
+            </div> <!-- icontext.// -->
+            <div class="mt-3">
+                <h5>{{i.subject}}</h5>
+                <p>
+                    {{i.review}}
+                </p>
+            </div>
+        </article>
+        
+    </div>
+    {% endfor %}
+
+</div>
+
+<br><br><br><br>
+
+<!-- add review -->
+<form action="{% url 'Review:submit_review' movie_deatails.id %} " method="post">
+    {% csrf_token %}
+    <h5>Write Your Review</h5>
+    <div>
+        <!-- Rating stars -->
+        <label>How do you rate this movie?</label>
+        <br>
+        <div class="rate">
+            <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
+            <input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5" class="half"></label>
+            <input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8" title="4"></label>
+            <input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5" class="half"></label>
+            <input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6" title="3"></label>
+            <input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5" class="half"></label>
+            <input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4" title="2"></label>
+            <input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5" class="half"></label>
+            <input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
+            <input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
+        </div>
+<br>
+        Review Title:
+        <input type="text" class="form-control" name="subject">
+        <br>
+        Review:
+        <textarea name="review" rows="4" class="form-control"></textarea>
+        <br>
+        {% if user.is_authenticated %}
+            <input type="submit" value="Submit Review" class="btn btn-primary">
+        {% else %}
+            <p>You must be logged in to post a review. <span><a href="{% url 'Accounts:login' %}">Login now</a></span></p>
+        {% endif %}
+
+    </div>
+</form>
+<script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 2000)
+  </script>
+{% endblock %}
+

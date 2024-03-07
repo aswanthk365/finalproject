@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %} 
+    <link rel="stylesheet" href="{% static '/css/registration.css' %}"> 
+{% endblock %}
+{% block tittle %}
+<title>Registration page</title>
+{% endblock %} 
+
+{% block body %}
+{% include 'messages.html' %}
+
+<div>
+  <h1><b><center>Registration Form</center></b></h1>
+<div class="container">
+  <form class="form-group" action="{% url 'Accounts:registration' %}" method="post">
+   {% csrf_token %}
+
+    <label for="username">User name:</label>
+    <input type="username" class="form-control" id="username" placeholder="enter username" name="username">
+    
+    <label for="first_name">First Name:</label>
+    <input type="first_name" class="form-control" id="first_name" placeholder="Enter first_name" name="first_name">
+
+    <label for="last_name">Last name:</label>
+    <input type="last_name" class="form-control" id="last_name" placeholder="Enter last_name" name="last_name">
+    
+
+    <label for="email">Email:</label>
+    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+    
+    <label for="pwd">Password:</label>
+    <input type="password" class="form-control" id="password" placeholder="Enter password" name="password">
+    
+    <label for="pwd">Password:</label>
+    <input type="password1" class="form-control" id="password1" placeholder="Enter password" name="password1"><br>
+    
+    <button type="submit" class="btn btn-primary">Submit</button><br><br>
+    <p>I have already have an account <a href="{% url 'Accounts:login'%}">Click here</p></a>
+  </form>
+</div>
+
+</div>
+<div>
+
+   <!-- java script -->
+  <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+  <script>
+    setTimeout(function(){
+      if ($('#msg').length > 0) {
+        $('#msg').remove();
+      }
+    }, 2000)
+  </script>
+{% endblock %}
+{% block footer %} 
+{% endblock %}
